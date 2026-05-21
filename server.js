@@ -131,14 +131,15 @@ app.post('/api/availability', authMiddleware, (req, res) => {
 });
 
 // Photos endpoints
-app.post('/api/photos', authMiddleware, upload.single('image'), (req, res) => {
-    if (!req.file) return res.status(400).json({ success: false, message: 'No file uploaded' });
+app.post('/api/photos', authMiddleware, upload.fields([{ name: 'image', maxCount: 1 }, { name: 'imageBack', maxCount: 1 }]), (req, res) => {
+    if (!req.files || !req.files['image']) return res.status(400).json({ success: false, message: 'No front image uploaded' });
 
     const db = readDB();
     const newPhoto = {
         id: Date.now(),
         serviceId: req.body.serviceId,
-        filename: req.file.filename,
+        filename: req.files['image'][0].filename,
+        back_filename: req.files['imageBack'] ? req.files['imageBack'][0].filename : null,
         uploadedAt: new Date().toISOString()
     };
     db.photos.push(newPhoto);
@@ -152,7 +153,7 @@ app.get('/api/photos/:serviceId', (req, res) => {
     const returnPhotos = filtered.map(p => ({
         id: p.id,
         filename: `uploads/${p.filename}`,
-        back_filename: null
+        back_filename: p.back_filename ? `uploads/${p.back_filename}` : null
     }));
     res.json({ success: true, photos: returnPhotos });
 });
