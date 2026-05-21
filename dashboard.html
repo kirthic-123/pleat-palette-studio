@@ -11,7 +11,8 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="mock-api.js"></script>
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 
 </head>
@@ -162,6 +163,19 @@
             <p class="text-light-dark mb-2">Upload custom photos for the Website. Leave empty or reset to fall back to the default studio photos.</p>
             
             <div class="about-manage-grid">
+                <!-- Splash Screen Background -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Splash Screen (Initial Loading Page)</div>
+                    <div class="about-photo-subtitle">The very first background shown when opening the site</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-splashBg" src="images/splash-bg.png" alt="Splash Screen Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-splashBg" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-splashBg" accept="image/*" onchange="uploadAboutPhoto('splashBg', this)">
+                    </div>
+                </div>
+
                 <!-- Home Page Hero Background -->
                 <div class="about-photo-card">
                     <div class="about-photo-title">Home Page Opening (Hero)</div>

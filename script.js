@@ -97,6 +97,36 @@ if (bookingForm) {
 
             const waText = `Hello! I would like to make an enquiry with The Pleat & Palette Studio.\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}\n*Service:* ${serviceLabel}\n*Event Date:* ${formData.date}\n*Location:* ${formData.location}\n\n*Additional Details:*\n${formData.message || 'No additional details.'}`;
 
+            // Send Email via Web3Forms
+            // USER TODO: Replace the placeholder below with your real Web3Forms Access Key from https://web3forms.com/
+            const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY_HERE"; 
+            
+            if (WEB3FORMS_ACCESS_KEY !== "YOUR_WEB3FORMS_ACCESS_KEY_HERE") {
+                const emailHtml = `
+                    <h3>New Booking Enquiry</h3>
+                    <p><strong>Name:</strong> ${formData.name}</p>
+                    <p><strong>Phone:</strong> ${formData.phone}</p>
+                    <p><strong>Service:</strong> ${serviceLabel}</p>
+                    <p><strong>Event Date:</strong> ${formData.date}</p>
+                    <p><strong>Location:</strong> ${formData.location}</p>
+                    <p><strong>Message:</strong> ${formData.message || 'No additional details.'}</p>
+                `;
+                
+                await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        access_key: WEB3FORMS_ACCESS_KEY,
+                        subject: `New Enquiry from ${formData.name}`,
+                        from_name: "The Pleat & Palette Studio",
+                        message: emailHtml
+                    })
+                });
+            }
+
             // Open WhatsApp in a new tab smoothly
             window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(waText)}`, '_blank');
 
@@ -226,6 +256,12 @@ async function loadSiteImages() {
         
         if (data.success && data.aboutPhotos) {
             const photos = data.aboutPhotos;
+            
+            // Splash Screen
+            if (photos['splashBg']) {
+                const splashEl = document.getElementById('splash-screen');
+                if (splashEl) splashEl.style.backgroundImage = `url('${photos['splashBg']}')`;
+            }
             
             // Home Hero
             if (photos['siteHero']) {

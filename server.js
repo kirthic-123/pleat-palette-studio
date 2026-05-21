@@ -146,7 +146,12 @@ app.post('/api/photos', authMiddleware, upload.single('image'), (req, res) => {
 app.get('/api/photos/:serviceId', (req, res) => {
     const db = readDB();
     const filtered = db.photos.filter(p => p.serviceId === req.params.serviceId);
-    res.json({ success: true, photos: filtered });
+    const returnPhotos = filtered.map(p => ({
+        id: p.id,
+        filename: `uploads/${p.filename}`,
+        back_filename: null
+    }));
+    res.json({ success: true, photos: returnPhotos });
 });
 
 app.delete('/api/photos/:id', authMiddleware, (req, res) => {
@@ -170,7 +175,15 @@ app.delete('/api/photos/:id', authMiddleware, (req, res) => {
 // About photos endpoints
 app.get('/api/about-photos', (req, res) => {
     const db = readDB();
-    res.json({ success: true, aboutPhotos: db.aboutPhotos || {} });
+    const formatted = {};
+    for (const [slot, filename] of Object.entries(db.aboutPhotos || {})) {
+        if (filename.startsWith('data:') || filename.startsWith('images/')) {
+            formatted[slot] = filename;
+        } else {
+            formatted[slot] = `uploads/${filename}`;
+        }
+    }
+    res.json({ success: true, aboutPhotos: formatted });
 });
 
 app.post('/api/about-photos', authMiddleware, upload.single('image'), (req, res) => {
