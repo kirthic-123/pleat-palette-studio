@@ -693,7 +693,8 @@
                         alert("Failed to upload photo.");
                     }
                 } else {
-                    alert("Upload failed. Ensure backend server is running.");
+                    const errText = await res.text();
+                    alert(`Upload failed. Status: ${res.status}. Server says: ${errText}`);
                 }
             } catch (e) {
                 console.error("Upload error", e);

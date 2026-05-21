@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -50,6 +50,9 @@ function writeDB(data) {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        if (!fs.existsSync(UPLOADS_DIR)) {
+            fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+        }
         cb(null, UPLOADS_DIR);
     },
     filename: function (req, file, cb) {
