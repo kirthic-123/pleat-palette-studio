@@ -246,7 +246,7 @@
         // Helper to format photo URL
         function getAboutPhotoUrl(filename, defaultUrl) {
             if (!filename) return defaultUrl;
-            if (filename.startsWith('data:') || filename.startsWith('images/')) {
+            if (filename.startsWith('data:') || filename.startsWith('images/') || filename.startsWith('uploads/')) {
                 return filename;
             }
             return 'uploads/' + filename;
