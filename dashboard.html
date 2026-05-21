@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Portfolio Works</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="mock-api.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+        <h2 class="font-playfair text-light">Studio Manager Portal</h2>
+        <button class="btn-primary-outline btn-white-outline"
+            onclick="logout()">Logout</button>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" id="tab-portfolio" onclick="switchTab('portfolio')">Manage Portfolio</button>
+            <button class="tab-btn" id="tab-bookings" onclick="switchTab('bookings')">Booking Logs</button>
+            <button class="tab-btn" id="tab-packages" onclick="switchTab('packages')">Pricing & Packages</button>
+            <button class="tab-btn" id="tab-availability" onclick="switchTab('availability')">Availability Calendar</button>
+            <button class="tab-btn" id="tab-about" onclick="switchTab('about')">Manage About Page</button>
+        </div>
+
+        <!-- PORTFOLIO SECTION -->
+        <div id="section-portfolio">
+            <h3>Manage Service Previews</h3>
+            <p class="text-light-dark mb-2">Select a premium package below to view or add new working photos.</p>
+
+            <div class="form-group">
+                <label for="serviceSelect">Select Service Category</label>
+                <select id="serviceSelect" onchange="loadPhotos()">
+                    <option value="bridal">Bridal Makeup</option>
+                    <option value="hair">Hairstyle Design</option>
+                    <option value="saree">Saree Pre-Pleating & Draping</option>
+                </select>
+            </div>
+
+            <div class="upload-box upload-box-flex">
+                <h4>Upload New Work</h4>
+                <div>
+                    <label class="upload-label">Front View (Required)</label>
+                    <input type="file" id="photoInput" accept="image/*" title="Select the main front image">
+                </div>
+                <div>
+                    <label class="upload-label">Back View (Optional, for Book Album)</label>
+                    <input type="file" id="photoInputBack" accept="image/*" title="Select an optional back view image to create a flip card">
+                </div>
+                <button class="btn-primary btn-small btn-align-start" onclick="uploadPhoto()">Upload Work</button>
+            </div>
+
+            <h4>Current Uploaded Works</h4>
+            <div id="gallery" class="gallery-grid">
+                <!-- Photos dynamically injected here -->
+            </div>
+        </div> <!-- End Portfolio Section -->
+
+        <!-- BOOKINGS SECTION -->
+        <div id="section-bookings" class="d-none">
+            <h3>Recent Booking Requests</h3>
+            <p class="text-light-dark mb-2">Detailed log of all clients filling out the website form.</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date Added</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Service</th>
+                            <th>Event Date</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <!-- Bookings injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+
+        <!-- PACKAGES SECTION -->
+        <div id="section-packages" class="d-none">
+            <h3>Manage Pricing & Packages</h3>
+            <p class="text-light-dark mb-2">Update the price and advance values for your website services dynamically.</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Package Name</th>
+                            <th>Features (One per line)</th>
+                            <th>Total Price (₹)</th>
+                            <th>Advance Amount (₹)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="packagesTableBody">
+                        <!-- Packages injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- AVAILABILITY SECTION -->
+        <div id="section-availability" class="d-none">
+            <h3>Manage Availability Calendar</h3>
+            <p class="text-light-dark mb-2">Click on any date in the calendar to view and edit its availability status. Changes are saved to the website database.</p>
+            
+            <div class="availability-flex-container">
+                <div class="calendar-pane">
+                    <div id="admin-calendar-container" class="calendar-container">
+                        <!-- Admin calendar rendered here -->
+                    </div>
+                </div>
+                <div class="details-pane">
+                    <div class="details-card">
+                        <h4>Date Options</h4>
+                        <div id="selected-date-display" class="mb-1 text-gold font-playfair" style="font-weight: 600; font-size: 1.1rem;">Select a date to manage</div>
+                        
+                        <div id="availability-form" class="d-none">
+                            <p class="text-sm text-light-dark mb-1" style="font-size: 0.85rem; line-height: 1.4;">Update status for the selected date:</p>
+                            <div class="form-group text-left" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                                <label class="radio-label">
+                                    <input type="radio" name="date-status" value="available" checked>
+                                    <span class="status-badge available-badge">🟢 Available</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="date-status" value="booked">
+                                    <span class="status-badge booked-badge">🔴 Fully Booked</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="date-status" value="unavailable">
+                                    <span class="status-badge unavailable-badge">Blocked / Unavailable</span>
+                                </label>
+                            </div>
+                            <button class="btn-primary w-100 btn-small" id="btn-save-status" onclick="saveAvailabilityStatus()">Save Status</button>
+                        </div>
+                        
+                        <div id="no-date-selected" class="text-light-dark text-center py-2">
+                            <i class="ph ph-calendar" style="font-size: 2.5rem; opacity: 0.4;"></i>
+                            <p class="text-sm mt-1" style="font-size: 0.85rem; margin-top: 0.5rem;">Click any active date in the calendar to update its booking status.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <div id="section-about" class="d-none">
+            <h3>Manage About Page Photos</h3>
+            <p class="text-light-dark mb-2">Upload custom photos for the About page. Leave empty or reset to fall back to the default studio photos.</p>
+            
+            <div class="about-manage-grid">
+                <!-- Hero Photo Card -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Hero Opening Photo</div>
+                    <div class="about-photo-subtitle">Top header background image on the About page</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-hero" src="images/cindrella-artist-hero.png" alt="Hero Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-hero" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-hero" accept="image/*" onchange="uploadAboutPhoto('hero', this)">
+                    </div>
+                </div>
+
+                <!-- Cindrella Main Card -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Cindrella Main Photo</div>
+                    <div class="about-photo-subtitle">Cindrella Ruth at work (collage main)</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-cindrellaMain" src="images/cindrella-ruth.png" alt="Cindrella Main Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-cindrellaMain" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-cindrellaMain" accept="image/*" onchange="uploadAboutPhoto('cindrellaMain', this)">
+                    </div>
+                </div>
+
+                <!-- Cindrella Overlap Card -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Cindrella Overlap Photo</div>
+                    <div class="about-photo-subtitle">Overlap details photo (collage secondary)</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-cindrellaOverlap" src="images/cindrella-about-overlap.png" alt="Cindrella Overlap Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-cindrellaOverlap" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-cindrellaOverlap" accept="image/*" onchange="uploadAboutPhoto('cindrellaOverlap', this)">
+                    </div>
+                </div>
+
+                <!-- Prisilla Main Card -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Prisilla Main Photo</div>
+                    <div class="about-photo-subtitle">Prisilla portrait (collage main)</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-prisillaMain" src="images/prisilla-portrait.png" alt="Prisilla Main Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-prisillaMain" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-prisillaMain" accept="image/*" onchange="uploadAboutPhoto('prisillaMain', this)">
+                    </div>
+                </div>
+
+                <!-- Prisilla Overlap Card -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Prisilla Overlap Photo</div>
+                    <div class="about-photo-subtitle">Prisilla hairstyle details (collage secondary)</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-prisillaOverlap" src="images/prisilla-hair-details.png" alt="Prisilla Overlap Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-prisillaOverlap" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-prisillaOverlap" accept="image/*" onchange="uploadAboutPhoto('prisillaOverlap', this)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('adminToken');
+        if (!token) window.location.href = 'admin.html';
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'admin.html';
+        }
+
+        async function loadPhotos() {
+            const serviceId = document.getElementById('serviceSelect').value;
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const res = await fetch(`/api/photos/${serviceId}`);
+                const data = await res.json();
+
+                if (data.photos && data.photos.length > 0) {
+                    gallery.innerHTML = data.photos.map(p => `
+                        <div class="gallery-item" id="item-${p.id}">
+                            <img src="${p.filename}" alt="Portfolio Work">
+                            <button class="btn-delete" onclick="deletePhoto(${p.id})"><i class="ph ph-trash"></i></button>
+                        </div>
+                    `).join('');
+                } else {
+                    gallery.innerHTML = '<p>No photos uploaded for this service yet.</p>';
+                }
+            } catch (e) {
+                gallery.innerHTML = '<p style="color:red">Failed to load photos.</p>';
+            }
+        }
+
+        async function uploadPhoto() {
+            const fileInput = document.getElementById('photoInput');
+            const fileInputBack = document.getElementById('photoInputBack');
+            const serviceId = document.getElementById('serviceSelect').value;
+
+            if (!fileInput.files[0]) return alert("Please select a front view image file first.");
+
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            if (fileInputBack.files[0]) {
+                formData.append('imageBack', fileInputBack.files[0]);
+            }
+            formData.append('serviceId', serviceId);
+
+            const res = await fetch('/api/photos', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+
+            if (res.ok) {
+                fileInput.value = '';
+                fileInputBack.value = '';
+                loadPhotos();
+            } else {
+                alert("Upload failed. Ensure backend server is running.");
+            }
+        }
+
+        async function deletePhoto(id) {
+            if (!confirm("Are you sure you want to delete this photo permanently?")) return;
+
+            const res = await fetch(`/api/photos/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (res.ok) {
+                loadPhotos();
+            } else {
+                alert("Failed to delete photo. Unauthorized or file missing.");
+            }
+        }
+
+        async function loadBookings() {
+            const tbody = document.getElementById('bookingsTableBody');
+            tbody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+
+            try {
+                const res = await fetch('/api/bookings', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+
+                if (data.bookings && data.bookings.length > 0) {
+                    tbody.innerHTML = data.bookings.map(b => `
+                        <tr>
+                            <td>${new Date(b.createdAt).toLocaleDateString()}</td>
+                            <td><strong>${b.name}</strong></td>
+                            <td><a href="https://wa.me/${b.phone.replace(/[^0-9]/g, '')}" target="_blank">${b.phone}</a></td>
+                            <td><span class="service-badge">${b.service}</span></td>
+                            <td>${b.date}</td>
+                            <td>${b.message || '<em>None</em>'}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6">No bookings recorded yet.</td></tr>';
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-danger">Failed to load bookings.</td></tr>';
+            }
+        }
+
+        async function loadDashboardPackages() {
+            const tbody = document.getElementById('packagesTableBody');
+            tbody.innerHTML = '<tr><td colspan="4">Loading packages...</td></tr>';
+            try {
+                const res = await fetch('/api/packages');
+                const data = await res.json();
+                if (data.packages && data.packages.length > 0) {
+                    tbody.innerHTML = data.packages.map(p => `
+                        <tr>
+                            <td><strong>${p.name}</strong></td>
+                            <td><textarea id="pkg-features-${p.id}" style="width: 250px; height: 100px; padding: 0.3rem;">${(p.features || []).join('\n')}</textarea></td>
+                            <td><input type="number" id="pkg-price-${p.id}" value="${p.price}" style="width: 100px; padding: 0.3rem;"></td>
+                            <td><input type="number" id="pkg-adv-${p.id}" value="${p.advance}" style="width: 100px; padding: 0.3rem;"></td>
+                            <td><button class="btn-primary btn-small" onclick="savePackage('${p.id}')">Save Changes</button></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-danger">Failed to load packages.</td></tr>';
+            }
+        }
+
+        async function savePackage(id) {
+            if (!confirm("Are you sure you want to update the package pricing?")) return;
+
+            const price = document.getElementById(`pkg-price-${id}`).value;
+            const advance = document.getElementById(`pkg-adv-${id}`).value;
+            const features = document.getElementById(`pkg-features-${id}`).value.split('\n').filter(f => f.trim() !== '');
+
+            try {
+                const res = await fetch('/api/packages', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ id, price: Number(price), advance: Number(advance), features })
+                });
+                
+                if (res.ok) {
+                    alert('Package updated successfully! Changes are live on the website.');
+                } else {
+                    alert('Failed to update package.');
+                }
+            } catch (e) {
+                alert('Error updating package.');
+            }
+        }
+
+        function switchTab(tabId) {
+            document.getElementById('section-portfolio').classList.toggle('d-none', tabId !== 'portfolio');
+            document.getElementById('section-bookings').classList.toggle('d-none', tabId !== 'bookings');
+            document.getElementById('section-packages').classList.toggle('d-none', tabId !== 'packages');
+            document.getElementById('section-availability').classList.toggle('d-none', tabId !== 'availability');
+            document.getElementById('section-about').classList.toggle('d-none', tabId !== 'about');
+
+            document.getElementById('tab-portfolio').classList.toggle('active', tabId === 'portfolio');
+            document.getElementById('tab-bookings').classList.toggle('active', tabId === 'bookings');
+            document.getElementById('tab-packages').classList.toggle('active', tabId === 'packages');
+            document.getElementById('tab-availability').classList.toggle('active', tabId === 'availability');
+            document.getElementById('tab-about').classList.toggle('active', tabId === 'about');
+
+            if (tabId === 'bookings') loadBookings();
+            if (tabId === 'packages') loadDashboardPackages();
+            if (tabId === 'availability') loadAvailability();
+            if (tabId === 'about') loadDashboardAboutPhotos();
+        }
+
+        // Availability Calendar Logic
+        let availabilityData = {};
+        let currentCalendarDate = new Date();
+        let selectedAdminDateStr = null;
+
+        async function loadAvailability() {
+            try {
+                const res = await fetch('/api/availability');
+                const data = await res.json();
+                if (data.success) {
+                    availabilityData = data.availability || {};
+                    renderAdminCalendar();
+                }
+            } catch (e) {
+                console.error("Failed to load availability data", e);
+            }
+        }
+
+        function renderAdminCalendar() {
+            const container = document.getElementById('admin-calendar-container');
+            if (!container) return;
+
+            const year = currentCalendarDate.getFullYear();
+            const month = currentCalendarDate.getMonth();
+
+            // First day of month
+            const firstDay = new Date(year, month, 1).getDay();
+            // Number of days in month
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            let html = `
+                <div class="calendar-header">
+                    <button class="calendar-nav-btn" onclick="changeAdminMonth(-1)"><i class="ph ph-caret-left"></i></button>
+                    <span class="calendar-title">${monthNames[month]} ${year}</span>
+                    <button class="calendar-nav-btn" onclick="changeAdminMonth(1)"><i class="ph ph-caret-right"></i></button>
+                </div>
+                <div class="calendar-weekdays">
+                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                </div>
+                <div class="calendar-days">
+            `;
+
+            // Spacer cells for previous month days
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-day empty"></div>`;
+            }
+
+            // Days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const status = availabilityData[dateStr] || 'available';
+                
+                let statusClass = 'available';
+                if (status === 'booked') statusClass = 'booked';
+                else if (status === 'unavailable') statusClass = 'unavailable';
+
+                const isSelected = dateStr === selectedAdminDateStr ? 'selected' : '';
+
+                html += `
+                    <div class="calendar-day ${statusClass} ${isSelected}" onclick="selectAdminDate('${dateStr}')">
+                        <span>${day}</span>
+                        <div class="day-indicator"></div>
+                    </div>
+                `;
+            }
+
+            html += `
+                </div>
+                <div class="calendar-legend">
+                    <div class="legend-item"><div class="legend-dot available"></div><span>Available</span></div>
+                    <div class="legend-item"><div class="legend-dot booked"></div><span>Fully Booked</span></div>
+                    <div class="legend-item"><div class="legend-dot unavailable"></div><span>Blocked</span></div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function changeAdminMonth(direction) {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + direction);
+            renderAdminCalendar();
+        }
+
+        function selectAdminDate(dateStr) {
+            selectedAdminDateStr = dateStr;
+            
+            // Re-render to highlight selected cell
+            renderAdminCalendar();
+
+            // Update details pane
+            const [year, month, day] = dateStr.split('-');
+            const dateObj = new Date(year, month - 1, day);
+            const formattedDate = dateObj.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' });
+
+            document.getElementById('selected-date-display').textContent = formattedDate;
+            document.getElementById('no-date-selected').classList.add('d-none');
+            document.getElementById('availability-form').classList.remove('d-none');
+
+            // Set radio values
+            const status = availabilityData[dateStr] || 'available';
+            const radios = document.getElementsByName('date-status');
+            for (const radio of radios) {
+                if (radio.value === status) {
+                    radio.checked = true;
+                }
+            }
+        }
+
+        async function saveAvailabilityStatus() {
+            if (!selectedAdminDateStr) return;
+
+            const radios = document.getElementsByName('date-status');
+            let selectedStatus = 'available';
+            for (const radio of radios) {
+                if (radio.checked) {
+                    selectedStatus = radio.value;
+                    break;
+                }
+            }
+
+            const btn = document.getElementById('btn-save-status');
+            const originalText = btn.textContent;
+            btn.textContent = 'Saving...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/availability', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ date: selectedAdminDateStr, status: selectedStatus })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success) {
+                        availabilityData = data.availability || {};
+                        renderAdminCalendar();
+                        alert('Availability updated successfully!');
+                    }
+                } else {
+                    alert('Failed to update availability. Unauthorized.');
+                }
+            } catch (e) {
+                console.error("Error saving availability status:", e);
+                alert('Error updating status.');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // About Page Photos Management
+        function getAboutPhotoUrl(filename, defaultUrl) {
+            if (!filename) return defaultUrl;
+            if (filename.startsWith('data:') || filename.startsWith('images/')) {
+                return filename;
+            }
+            return 'uploads/' + filename;
+        }
+
+        const defaultAboutPhotos = {
+            hero: 'images/cindrella-artist-hero.png',
+            cindrellaMain: 'images/cindrella-ruth.png',
+            cindrellaOverlap: 'images/cindrella-about-overlap.png',
+            prisillaMain: 'images/prisilla-portrait.png',
+            prisillaOverlap: 'images/prisilla-hair-details.png'
+        };
+
+        async function loadDashboardAboutPhotos() {
+            try {
+                const res = await fetch('/api/about-photos');
+                const data = await res.json();
+                if (data.success && data.aboutPhotos) {
+                    const photos = data.aboutPhotos;
+                    for (const slot in defaultAboutPhotos) {
+                        const imgEl = document.getElementById(`prev-${slot}`);
+                        if (imgEl) {
+                            imgEl.src = getAboutPhotoUrl(photos[slot], defaultAboutPhotos[slot]);
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to load about page photos for dashboard", e);
+            }
+        }
+
+        async function uploadAboutPhoto(slot, input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('slot', slot);
+
+            const imgEl = document.getElementById(`prev-${slot}`);
+            if (imgEl) {
+                imgEl.style.opacity = '0.5';
+            }
+
+            try {
+                const res = await fetch('/api/about-photos', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && data.aboutPhotos) {
+                        const photoFilename = data.aboutPhotos[slot];
+                        if (imgEl) {
+                            imgEl.src = getAboutPhotoUrl(photoFilename, defaultAboutPhotos[slot]);
+                        }
+                        alert("Photo uploaded successfully!");
+                    } else {
+                        alert("Failed to upload photo.");
+                    }
+                } else {
+                    alert("Upload failed. Ensure backend server is running.");
+                }
+            } catch (e) {
+                console.error("Upload error", e);
+                alert("An error occurred during upload.");
+            } finally {
+                if (imgEl) {
+                    imgEl.style.opacity = '1';
+                }
+                input.value = '';
+            }
+        }
+
+        // Initialize display
+        loadPhotos();
+    </script>
+</body>
+
+</html>

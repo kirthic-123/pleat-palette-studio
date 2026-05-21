@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pleat & Palette Studio | Luxury Bridal Styling & Makeup</title>
+    <meta name="description"
+        content="Premium Groom & Bridal Makeup, Hairstyle, and Saree Pre-Pleating Services. Book your luxury experience today.">
+    <!-- Google Fonts: Playfair Display for elegance, Inter for modern UI text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Phosphor Icons for modern premium icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="mock-api.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Grand Opening Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-logo-container">
+            <span class="splash-logo-the">THE</span>
+            <span class="splash-logo-main">PLEAT &amp; PALETTE</span>
+            <span class="splash-logo-sub">STUDIO</span>
+        </div>
+        <div class="splash-line"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar transition-all" id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="brand-logo">
+                <span class="logo-the">THE</span>
+                <span class="logo-main">PLEAT &amp; PALETTE</span>
+                <span class="logo-sub">STUDIO</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#contact" class="btn-primary-outline">Book Now</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <i class="ph ph-list"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <span class="hero-subtitle fade-up">Realize Your Vision</span>
+            <h1 class="hero-title fade-up delay-1">Flawless Beauty for Your Perfect Day</h1>
+            <p class="hero-description fade-up delay-2">Exclusive styling, makeup, and draping services tailored for
+                brides and grooms who demand perfection and elegance.</p>
+            <div class="hero-actions fade-up delay-3">
+                <a href="#contact" class="btn-primary">Reserve Your Date</a>
+                <a href="#services" class="btn-secondary">Explore Services</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section class="services section" id="services">
+        <div class="container">
+            <div class="section-header text-center fade-up">
+                <h2 class="section-title">Our Premium Services</h2>
+                <div class="divider"></div>
+                <p class="section-subtitle">Enhancing your natural beauty for life's most celebrated moments</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card fade-up delay-1 cursor-pointer" onclick="openGallery('bridal')"
+                    title="Click to view previous works">
+                    <div class="service-img-wrapper">
+                        <img src="images/bridal-makeup-new.jpg" alt="Bridal Makeup" class="service-img" id="img-bridal">
+                        <div class="service-overlay-icon"><i class="ph ph-sparkle"></i></div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Bridal Makeup</h3>
+                        <p>Flawless, radiant, and timeless enhancements crafted exclusively to complement your unique
+                            bridal vision.</p>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card fade-up delay-2 cursor-pointer" onclick="openGallery('hair')"
+                    title="Click to view previous works">
+                    <div class="service-img-wrapper">
+                        <img src="images/bridal-hair-new.jpg" alt="Bridal Hairstyle" class="service-img" id="img-hair">
+                        <div class="service-overlay-icon"><i class="ph ph-scissors"></i></div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Hairstyle Design</h3>
+                        <p>Intricate, secure, and breathtaking hair styling crafted to complement your attire and endure
+                            the entire event.</p>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card fade-up delay-3 cursor-pointer" onclick="openGallery('saree')"
+                    title="Click to view previous works">
+                    <div class="service-img-wrapper">
+                        <img src="images/saree-pleating-new.jpg" alt="Saree Pre-Pleating" class="service-img"
+                            id="img-saree">
+                        <div class="service-overlay-icon"><i class="ph ph-dress"></i></div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Saree Pre-Pleating & Draping</h3>
+                        <p>Immaculate and secure saree draping with professional pre-pleating services for a perfect
+                            silhouette every time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-header-mt text-center fade-up">
+                <h3 class="font-playfair section-title-large pricing-header-mt">Service
+                    Packages & Pricing</h3>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Package 1: Brides Maid -->
+                <div class="pricing-card fade-up delay-1">
+                    <div class="pricing-header">
+                        <h3>Brides Maid Package</h3>
+                        <div class="price"><span id="price-bridesmaid">₹4,000</span></div>
+                        <div class="advance-price" id="adv-bridesmaid">Advance: ₹1,000</div>
+                    </div>
+                    <ul class="pricing-features" id="features-bridesmaid">
+                        <li><i class="ph-fill ph-check-circle"></i> Natural HD Glow Makeup</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Lashes and Lens</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hairstyling</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Saree Draping</li>
+                    </ul>
+                    <a href="#contact" class="btn-primary-outline w-100 mt-2">Choose Brides Maid</a>
+                </div>
+
+                <!-- Package 2: Minimalist -->
+                <div class="pricing-card fade-up delay-2">
+                    <div class="pricing-header">
+                        <h3 class="pricing-card-title">Minimalized Package</h3>
+                        <div class="price"><span id="price-minimalized">₹10,000</span></div>
+                        <div class="advance-price" id="adv-minimalized">Advance: ₹3,000</div>
+                    </div>
+                    <ul class="pricing-features scrollable-features" id="features-minimalized">
+                        <li><i class="ph-fill ph-check-circle"></i> Subtle HD look (Natural & Elegant)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Estee Lauder, Huda Beauty, Forever 52, PAC</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Elegant eye makeup</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Glossy lipstick longstay</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Longstay makeup spray</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hairstyles</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Safety pins and hair pins</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair blow dry with crimping</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair accessories</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Savuri or curls & straight extension</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Flowers (depends upon the event)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Eye lens (New one)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Eye lashes (New one)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Saree pre pleating</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Saree box folding</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Lehanga or can can draping available</li>
+                        <li><i class="ph-fill ph-check-circle"></i> We wait for second Saree change over</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Complementary - Groom makeup</li>
+                    </ul>
+                    <a href="#contact" class="btn-primary-outline w-100 mt-2">Choose Minimalized</a>
+                </div>
+
+                <!-- Package 3: Signature -->
+                <div class="pricing-card fade-up delay-3">
+                    <div class="pricing-header">
+                        <h3>Signature Package</h3>
+                        <div class="price"><span id="price-signature">₹15,000</span></div>
+                        <div class="advance-price" id="adv-signature">Advance: ₹5,000</div>
+                    </div>
+                    <ul class="pricing-features scrollable-features" id="features-signature">
+                        <li><i class="ph-fill ph-check-circle"></i> Radiant dewy HD look</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Huda beauty, Nars (for radiant look)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Elegant eye makeup (signature look)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Glossy lipstick contour</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Transfer proof makeup</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Long stay spray</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hairstyles</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Safety pins and hair pins</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair blow dry with crimping</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair accessories</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Savuri or curls & straight extension</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Flowers (depends upon the event)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Eye lens (New one)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Eye lashes (New one)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Saree pre pleating</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Saree fluffy pleats</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hanger folding</li>
+                        <li><i class="ph-fill ph-check-circle"></i> We wait for second Saree change over</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Lehanga or can can draping available</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Complementary - Groom makeup</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair comb, hand fan complementary</li>
+                    </ul>
+                    <a href="#contact" class="btn-primary-outline w-100 mt-2">Choose Signature</a>
+                </div>
+
+                <!-- Package 4: Royal Airbrush -->
+                <div class="pricing-card fade-up delay-1">
+                    <div class="pricing-header">
+                        <h3 class="pricing-card-title">Royal Airbrush Makeup</h3>
+                        <div class="price"><span id="price-royal">₹22,000</span></div>
+                        <div class="advance-price" id="adv-royal">Advance: ₹5,000</div>
+                    </div>
+                    <ul class="pricing-features scrollable-features" id="features-royal">
+                        <li><i class="ph-fill ph-check-circle"></i> Dewy glossy Airbrush look</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Temptu Airbrush foundations</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Elegant eye makeup (signature look)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Glossy lipstick contour</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Transfer proof makeup</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Dewy look spray</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Long stay spray</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hairstyles</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Safety pins and hair pins</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair blow dry with crimping</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair accessories</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Savuri or curls & straight extension</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Flowers (depends upon the event)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Eye lens (New one)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Eye lashes (New one)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Saree pre pleating</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Saree fluffy pleats</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hanger folding</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Box folding</li>
+                        <li><i class="ph-fill ph-check-circle"></i> We wait for second Saree change over</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Lehanga or can can draping available</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Complementary - Groom makeup</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hair comb, hand fan complementary</li>
+                    </ul>
+                    <a href="#contact" class="btn-primary-outline w-100 mt-2">Choose Royal</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshop Section -->
+    <section class="workshop section" id="workshop">
+        <div class="container">
+            <div class="section-header text-center fade-up">
+                <span class="hero-subtitle hero-subtitle-gold">✨ The Pleat
+                    & Palette Studio ✨</span>
+                <h2 class="section-title">2 Days Saree Draping Workshop</h2>
+                <div class="divider"></div>
+                <p class="section-subtitle">Learn the art of perfect saree draping with hands-on practice. Fees: <span id="price-workshop">₹2,500</span>
+                </p>
+            </div>
+
+            <div class="workshop-grid">
+                <!-- Schedule Cards -->
+                <div class="workshop-schedule">
+                    <div class="schedule-card fade-up delay-1">
+                        <div class="day-badge">Day 1</div>
+                        <p>Normal pre-pleating with box folding and hands-on practice.</p>
+                    </div>
+                    <div class="schedule-card mt-1 fade-up delay-2">
+                        <div class="day-badge">Day 2</div>
+                        <p>Fluffy pleating with hanger and box folding.</p>
+                        <p class="mt-1">Draping class with proper hands-on session.</p>
+                    </div>
+                    <div class="requirements-card schedule-card mt-2 p-2">
+                        <h4 class="font-playfair text-gold mb-1">What to Bring</h4>
+                        <ul class="perks-list text-dark">
+                            <li><i class="ph-fill ph-check-circle"></i> 1 Iron Box</li>
+                            <li><i class="ph-fill ph-check-circle"></i> 2 Sarees for Hands-on Practice</li>
+                        </ul>
+                    </div>
+                    <div class="perks-card mt-1">
+                        <h4 class="font-playfair text-gold mb-1">Workshop Perks</h4>
+                        <ul class="perks-list">
+                            <li><i class="ph-fill ph-coffee"></i> Refreshments & snacks provided</li>
+                            <li><i class="ph-fill ph-fork-knife"></i> Day 2 class lunch provided</li>
+                            <li><i class="ph-fill ph-certificate"></i> Course Completion Certificate</li>
+                            <li><i class="ph-fill ph-gift"></i> Complimentary Starter Kit (Safety pins, ball pins, peg,
+                                hanger)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Learning Curriculum -->
+                <div class="workshop-learning">
+                    <h3 class="font-playfair mb-2 text-center section-title-medium">Detailed Curriculum</h3>
+
+                    <ul class="learning-grid mb-2">
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> South Indian pre-pleated draping</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Single pleat draping</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Bubble pleat draping</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Saree pre-pleating</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> How to take perfect pallu pleats (7 to 12)
+                        </li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Perfect chest pleats and spreading
+                            techniques</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Perfect side pleats</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Finally that 5 minutes draping</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Pre and post steam ironing</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Professional way of folding</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Tips and tricks on draping</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Exclusive bubble pleat draping</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Myths on bubble pleat draping</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Product knowledge</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Proper hands on session</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> General measurements techniques</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Customization learning about body types &
+                            patterns</li>
+                        <li><i class="ph-fill ph-check-circle text-gold"></i> Bring as many sarees you want to practice
+                        </li>
+                    </ul>
+
+
+                    <div class="curriculum-grid">
+                        <div class="curriculum-card glass-panel p-2">
+                            <h4 class="text-gold mb-1"><i class="ph-fill ph-shopping-bag"></i> Product Knowledge</h4>
+                            <p class="font-inter text-sm">Choosing the right tools and accessories, understanding where
+                                to source high-quality products, and selecting the right items.</p>
+                        </div>
+
+                        <div class="curriculum-card glass-panel p-2">
+                            <h4 class="text-gold mb-1"><i class="ph-fill ph-ruler"></i> Body Types & Measurement</h4>
+                            <p class="font-inter text-sm">Understanding different body types and taking accurate
+                                measurements are key to achieving an elegant drape.</p>
+                        </div>
+
+                        <div class="curriculum-card glass-panel p-2">
+                            <h4 class="text-gold mb-1"><i class="ph-fill ph-wind"></i> Ironing Tips & Tricks</h4>
+                            <p class="font-inter text-sm">Learn essential ironing tips tailored for different fabrics,
+                                ensuring your sarees remain wrinkle-free.</p>
+                        </div>
+
+                        <div class="curriculum-card glass-panel p-2">
+                            <h4 class="text-gold mb-1"><i class="ph-fill ph-stack"></i> Pre-Pleating & Folding</h4>
+                            <p class="font-inter text-sm">You will be guided on how to pre-pleat efficiently and
+                                box-fold sarees correctly for easy storage and quick draping.</p>
+                        </div>
+
+                        <div class="curriculum-card glass-panel p-2">
+                            <h4 class="text-gold mb-1"><i class="ph-fill ph-cloud"></i> Fluffy Pre-Pleating</h4>
+                            <p class="font-inter text-sm">Learn fluffy pre-pleating to achieve a stunning and
+                                well-structured look using a hanger.</p>
+                        </div>
+
+                        <div class="curriculum-card glass-panel p-2">
+                            <h4 class="text-gold mb-1"><i class="ph-fill ph-star"></i> Draping Techniques</h4>
+                            <p class="font-inter text-sm">Master various draping techniques (South Indian, Single Pleat,
+                                Bubble Pleat) step-by-step for a flawless look.</p>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="btn-primary w-100 mt-2 text-center btn-block-large">Book Workshop Seat</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-time Status / Dynamic Element -->
+    <section class="availability-banner">
+        <div class="container text-center text-light">
+            <h3 class="font-playfair">Now Accepting Bookings for 2026</h3>
+            <p class="font-inter font-light">Limited availability for peak wedding season. Secure your slot dynamically.
+            </p>
+            <div class="live-status">
+                <span class="pulse-indicator"></span>
+                <span>Live availability: <strong id="dynamic-slots">4 Dates Left this Month</strong></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking & Enquiries Section -->
+    <section class="booking section" id="contact">
+        <div class="container">
+            <div class="booking-wrapper">
+                <div class="booking-info">
+                    <h2 class="section-title">Enquire & Book</h2>
+                    <!-- Availability Calendar Section -->
+                    <div class="client-calendar-section mb-2">
+                        <h4 class="font-playfair text-gold mb-1" style="font-size: 1.25rem;">Check Date Availability</h4>
+                        <p class="text-sm text-light-dark mb-1" style="font-size: 0.85rem; line-height: 1.4;">Select an available date on the calendar. It will auto-fill the Event Date field in the booking form.</p>
+                        <div id="customer-calendar" class="calendar-container">
+                            <!-- Calendar will render here dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="icon-box"><i class="ph ph-phone"></i></div>
+                            <div>
+                                <h4>Call Us</h4>
+                                <span>+91 95855 62822</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon-box"><i class="ph ph-envelope-simple"></i></div>
+                            <div>
+                                <h4>Email</h4>
+                                <span>kirthic00@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon-box"><i class="ph ph-map-pin"></i></div>
+                            <div>
+                                <h4>Studio Location</h4>
+                                <span>103 D MEC Nagar, Annaiyappan Street, Nallampalayam, Coimbatore</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-form-container glass-panel">
+                    <form id="bookingForm" class="booking-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" required placeholder="Jane Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="+91 XXXXX XXXXX">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Select Service</label>
+                            <select id="service" name="service" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="bridal">Bridal Makeup</option>
+                                <option value="hair">Bridal Hairstyle</option>
+                                <option value="saree">Saree Pre-Pleating & Draping</option>
+                                <option value="combo">Complete Bridal/Groom Combo</option>
+                                <option value="workshop">2-Day Saree Draping Workshop</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Event Date</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Location Address</label>
+                            <input type="text" id="location" name="location" required
+                                placeholder="Event venue or full address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Additional Details (Optional)</label>
+                            <textarea id="message" name="message" rows="4"
+                                placeholder="Tell us about the occasion, your vision, or any specific requirements..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary w-100">Submit Enquiry</button>
+                    </form>
+
+                    <!-- Success Overlay -->
+                    <div class="form-success-overlay" id="formSuccess">
+                        <div class="success-content text-center">
+                            <i class="ph-fill ph-check-circle success-icon"></i>
+                            <h3>Enquiry Received</h3>
+                            <p>Thank you! Our styling team will get back to you momentarily.</p>
+                            <button class="btn-secondary mt-1" id="closeSuccess">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <a href="#" class="brand-logo mb-1 d-inline-block">
+                <span class="logo-the">THE</span>
+                <span class="logo-main">PLEAT &amp; PALETTE</span>
+                <span class="logo-sub">STUDIO</span>
+            </a>
+            <p class="font-light opacity-80 mb-2 mt-1">Crafting timeless beauty for life's most precious moments.</p>
+            <div class="social-links mb-2">
+                <a href="https://www.instagram.com/the_pleat_and_palette_studio?igsh=MTJ3aHlob2EwZ3kzMw==" aria-label="Visit our Instagram page"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#" aria-label="Visit our Facebook page"><i class="ph ph-facebook-logo"></i></a>
+                <a href="#" aria-label="Visit our Pinterest page"><i class="ph ph-pinterest-logo"></i></a>
+            </div>
+            <p class="copyright text-sm opacity-60">&copy; 2026 The Pleat & Palette Studio. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Gallery Modal Overlay -->
+    <div id="galleryModal" class="gallery-modal">
+        <div class="gallery-modal-content">
+            <span class="gallery-close" onclick="closeGallery()"><i class="ph ph-x"></i></span>
+            <h2 id="galleryTitle" class="section-title text-center gallery-title">Past Works</h2>
+            <div id="galleryContainer" class="client-gallery-grid">
+                <!-- Works will be injected here through script.js -->
+            </div>
+            <div id="galleryLoadingIndicator" class="text-center loading-indicator">Loading works...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
