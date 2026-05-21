@@ -195,6 +195,9 @@ h4 {
 .splash-logo-container {
     text-align: center;
     opacity: 0;
+}
+
+.splash-logo-container.ready {
     animation: fadeIn 2s forwards;
 }
 

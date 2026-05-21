@@ -289,6 +289,10 @@ async function loadSiteImages() {
         }
     } catch (e) {
         console.error('Failed to load site images:', e);
+    } finally {
+        // Trigger the animation after we've attempted to load the background image
+        const logo = document.querySelector('.splash-logo-container');
+        if (logo) logo.classList.add('ready');
     }
 }
 
