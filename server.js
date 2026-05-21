@@ -13,26 +13,35 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '')));
 
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
-if (!fs.existsSync(UPLOADS_DIR)) {
-    fs.mkdirSync(UPLOADS_DIR);
+try {
+    if (!fs.existsSync(UPLOADS_DIR)) {
+        fs.mkdirSync(UPLOADS_DIR);
+    }
+} catch (error) {
+    console.warn("Could not create uploads directory (might be a read-only environment):", error.message);
 }
 
 const DB_FILE = path.join(__dirname, 'db.json');
 
 function readDB() {
-    if (!fs.existsSync(DB_FILE)) {
-        const initialData = { photos: [], bookings: [], availability: {}, aboutPhotos: {} };
-        fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2));
-        return initialData;
+    try {
+        if (!fs.existsSync(DB_FILE)) {
+            const initialData = { photos: [], bookings: [], availability: {}, aboutPhotos: {} };
+            fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2));
+            return initialData;
+        }
+        const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+        if (!db.availability) {
+            db.availability = {};
+        }
+        if (!db.aboutPhotos) {
+            db.aboutPhotos = {};
+        }
+        return db;
+    } catch (error) {
+        console.warn("Could not read or write db.json (might be a read-only environment):", error.message);
+        return { photos: [], bookings: [], availability: {}, aboutPhotos: {} };
     }
-    const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-    if (!db.availability) {
-        db.availability = {};
-    }
-    if (!db.aboutPhotos) {
-        db.aboutPhotos = {};
-    }
-    return db;
 }
 
 function writeDB(data) {

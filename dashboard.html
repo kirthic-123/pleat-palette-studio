@@ -30,7 +30,7 @@
             <button class="tab-btn" id="tab-bookings" onclick="switchTab('bookings')">Booking Logs</button>
             <button class="tab-btn" id="tab-packages" onclick="switchTab('packages')">Pricing & Packages</button>
             <button class="tab-btn" id="tab-availability" onclick="switchTab('availability')">Availability Calendar</button>
-            <button class="tab-btn" id="tab-about" onclick="switchTab('about')">Manage About Page</button>
+            <button class="tab-btn" id="tab-about" onclick="switchTab('about')">Manage Site Images</button>
         </div>
 
         <!-- PORTFOLIO SECTION -->
@@ -156,15 +156,67 @@
             </div>
         </div>
 
-        <!-- ABOUT SECTION -->
+        <!-- SITE IMAGES SECTION -->
         <div id="section-about" class="d-none">
-            <h3>Manage About Page Photos</h3>
-            <p class="text-light-dark mb-2">Upload custom photos for the About page. Leave empty or reset to fall back to the default studio photos.</p>
+            <h3>Manage Site Images</h3>
+            <p class="text-light-dark mb-2">Upload custom photos for the Website. Leave empty or reset to fall back to the default studio photos.</p>
             
             <div class="about-manage-grid">
-                <!-- Hero Photo Card -->
+                <!-- Home Page Hero Background -->
                 <div class="about-photo-card">
-                    <div class="about-photo-title">Hero Opening Photo</div>
+                    <div class="about-photo-title">Home Page Opening (Hero)</div>
+                    <div class="about-photo-subtitle">The main background image on the home page</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-siteHero" src="images/hero-bg-texture.jpg" alt="Home Hero Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-siteHero" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-siteHero" accept="image/*" onchange="uploadAboutPhoto('siteHero', this)">
+                    </div>
+                </div>
+
+                <!-- Home Bridal Service -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Home - Bridal Makeup Service</div>
+                    <div class="about-photo-subtitle">Service image on the home page</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-serviceBridal" src="images/bridal-makeup-new.jpg" alt="Bridal Service Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-serviceBridal" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-serviceBridal" accept="image/*" onchange="uploadAboutPhoto('serviceBridal', this)">
+                    </div>
+                </div>
+
+                <!-- Home Hairstyle Service -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Home - Hairstyle Service</div>
+                    <div class="about-photo-subtitle">Service image on the home page</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-serviceHair" src="images/bridal-hair-new.jpg" alt="Hair Service Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-serviceHair" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-serviceHair" accept="image/*" onchange="uploadAboutPhoto('serviceHair', this)">
+                    </div>
+                </div>
+
+                <!-- Home Saree Service -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">Home - Saree Service</div>
+                    <div class="about-photo-subtitle">Service image on the home page</div>
+                    <div class="about-photo-preview-box">
+                        <img id="prev-serviceSaree" src="images/saree-pleating-new.jpg" alt="Saree Service Preview">
+                    </div>
+                    <div class="about-photo-actions">
+                        <label for="input-serviceSaree" class="btn-primary-outline btn-small">Choose Image</label>
+                        <input type="file" id="input-serviceSaree" accept="image/*" onchange="uploadAboutPhoto('serviceSaree', this)">
+                    </div>
+                </div>
+
+                <!-- About Page Hero Photo -->
+                <div class="about-photo-card">
+                    <div class="about-photo-title">About Page Hero</div>
                     <div class="about-photo-subtitle">Top header background image on the About page</div>
                     <div class="about-photo-preview-box">
                         <img id="prev-hero" src="images/cindrella-artist-hero.png" alt="Hero Preview">

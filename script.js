@@ -206,6 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load customer availability calendar
     loadClientAvailability();
 
+    // Load dynamic site images
+    loadSiteImages();
+
     // Bind native date picker input change validation
     const dateInput = document.getElementById('date');
     if (dateInput) {
@@ -214,6 +217,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Dynamic Site Images Function
+async function loadSiteImages() {
+    try {
+        const res = await fetch('/api/about-photos');
+        const data = await res.json();
+        
+        if (data.success && data.aboutPhotos) {
+            const photos = data.aboutPhotos;
+            
+            // Home Hero
+            if (photos['siteHero']) {
+                const heroEl = document.getElementById('home-hero');
+                if (heroEl) heroEl.style.backgroundImage = `url('${photos['siteHero']}')`;
+            }
+            
+            // Bridal Service
+            if (photos['serviceBridal']) {
+                const bridalImg = document.getElementById('img-bridal');
+                if (bridalImg) bridalImg.src = photos['serviceBridal'];
+            }
+            
+            // Hair Service
+            if (photos['serviceHair']) {
+                const hairImg = document.getElementById('img-hair');
+                if (hairImg) hairImg.src = photos['serviceHair'];
+            }
+            
+            // Saree Service
+            if (photos['serviceSaree']) {
+                const sareeImg = document.getElementById('img-saree');
+                if (sareeImg) sareeImg.src = photos['serviceSaree'];
+            }
+        }
+    } catch (e) {
+        console.error('Failed to load site images:', e);
+    }
+}
 
 // Dynamic Packages Function
 async function loadPackages() {
