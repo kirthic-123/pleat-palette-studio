@@ -209,9 +209,13 @@ app.post('/api/about-photos', authMiddleware, upload.single('image'), (req, res)
     res.json({ success: true, aboutPhotos: db.aboutPhotos });
 });
 
-// Catch all route to serve index.html
+// Catch all route to serve index.html for navigation, but return 404 for missing assets
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    if (req.accepts('html')) {
+        res.sendFile(path.join(__dirname, 'index.html'));
+    } else {
+        res.status(404).send('Not found');
+    }
 });
 
 app.listen(PORT, () => {
