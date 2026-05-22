@@ -260,7 +260,24 @@ async function loadSiteImages() {
             // Splash Screen
             if (photos['splashBg']) {
                 const splashEl = document.getElementById('splash-screen');
-                if (splashEl) splashEl.style.backgroundImage = `url('${photos['splashBg']}')`;
+                if (splashEl) {
+                    const img = new Image();
+                    img.onload = () => {
+                        splashEl.style.backgroundImage = `url('${photos['splashBg']}')`;
+                        const logo = document.querySelector('.splash-logo-container');
+                        if (logo) logo.classList.add('ready');
+                    };
+                    img.onerror = () => {
+                        // Fallback if image fails to load
+                        const logo = document.querySelector('.splash-logo-container');
+                        if (logo) logo.classList.add('ready');
+                    }
+                    img.src = photos['splashBg'];
+                }
+            } else {
+                // No custom background, trigger animation immediately
+                const logo = document.querySelector('.splash-logo-container');
+                if (logo) logo.classList.add('ready');
             }
             
             // Home Hero
@@ -289,10 +306,6 @@ async function loadSiteImages() {
         }
     } catch (e) {
         console.error('Failed to load site images:', e);
-    } finally {
-        // Trigger the animation after we've attempted to load the background image
-        const logo = document.querySelector('.splash-logo-container');
-        if (logo) logo.classList.add('ready');
     }
 }
 

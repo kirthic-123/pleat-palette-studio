@@ -629,7 +629,7 @@
         // About Page Photos Management
         function getAboutPhotoUrl(filename, defaultUrl) {
             if (!filename) return defaultUrl;
-            if (filename.startsWith('data:') || filename.startsWith('images/') || filename.startsWith('uploads/')) {
+            if (filename.startsWith('data:') || filename.startsWith('images/') || filename.startsWith('uploads/') || filename.startsWith('http')) {
                 return filename;
             }
             return 'uploads/' + filename;
